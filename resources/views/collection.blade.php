@@ -10,7 +10,8 @@
     
     <article>
 
-        <?= $post;?>
+        <?= $post->body;?>
+       
     </article>
   <a href="/collection">Go back</a>
 </body>
