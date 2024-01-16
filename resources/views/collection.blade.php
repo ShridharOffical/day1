@@ -8,16 +8,10 @@
 </head>
 <body>
     
-
-<php foreach($posts as $post):?>
     <article>
-        <h1>
-            <?= $post->title;?>
-        </h1>
-         <div>
-            <?= $post->body;?>
-         </div>
-    </article>
 
+        <?= $post;?>
+    </article>
+  <a href="/collection">Go back</a>
 </body>
 </html>

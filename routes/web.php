@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Post;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
 
@@ -24,45 +25,35 @@ Route::get('/article', function () {
 
 Route::get('posts/{post}', function ($slug) {
     //find a post by its slug and pass it to a view called "post"
-
-    // $post = Post::find($slug);
-    return view('post', [
+    return view('collection', [
         'post' => Post::find($slug)
     ]);
+});
 
-    Route::get('/collection', function () {
+Route::get('/collect', function () {
 
-       $document= YamlFrontMatter::parseFile(resource_path('posts/my-first-post.html'));
-        // $files = File::files(resource_path("posts"));
-
-         ddd($document);
-
-
-        //    $posts =collect($files)->map(function($file){
-
-        //     $document = YamlFrontMatter::parseFile($file);
-        //     return new Post(
-
-        //         $document->title,
-        //         $document->date,
-        //         $document->body(),
-        //         $document->slug
-        //     );
-        //    });
+    return view('collection');
+});
 
 
+Route::get('/collection', function () {
 
-        // });
-        // if(! file_exists($path=__DIR__ . "/../resources/posts/{$slug}.html")){
+    $document = YamlFrontMatter::parseFile(resource_path('posts/my-first-post.html'));
+    $files = File::files(resource_path("posts/"));
 
-        //     return view('/');
-        // }
-        // // return $slug;
-        // $posts=cache()->remember("posts.{$slug}", 5, function () use ($path) {
-        //     var_dump('file_get_contents');
-        //     return file_get_contents($path);
+    $posts = [];
 
-    });
-    // return view('post',['post'=>$posts]);
+    foreach ($files as $file) {
 
+        $document = YamlFrontMatter::parseFile($file);
+
+        $posts[] = new Post(
+            $document->title,
+            $document->date,
+            $document->body(),
+            $document->slug
+        );
+    }
+
+    return view('post', ['posts' => $posts]);
 });
