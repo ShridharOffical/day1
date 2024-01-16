@@ -40,18 +40,14 @@ Route::get('/collection', function () {
 
     $files = File::files(resource_path("posts/"));
 
-    // This is array map Approch
-    $posts = [];
-    $posts =array_map(function($file){
+    $posts=collect($files)->map(function ($file){
         $document = YamlFrontMatter::parseFile(resource_path('posts/my-first-post.html'));
-
         return new Post(
             $document->title,
             $document->date,
             $document->body(),
             $document->slug
         );
-    },$files);
-
+    });
     return view('post', ['posts' => $posts]);
 });
