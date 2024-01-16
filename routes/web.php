@@ -38,20 +38,8 @@ Route::get('/collect', function () {
 
 
 Route::get('/collection', function () {
-    // Use caching for 10 minutes (600 seconds).
-    $posts = Cache::remember('post_collection',10, function () {
-        $files = File::files(resource_path("posts/"));
-
-        return collect($files)->map(function ($file) {
-            $document = YamlFrontMatter::parseFile($file);
-            return new Post(
-                $document->title,
-                $document->date,
-                $document->body(),
-                $document->slug
-            );
-        })->sortBy('date');
-    });
+    // Use caching through the Post class.
+    $posts = Post::all();
 
     return view('post', ['posts' => $posts]);
 });

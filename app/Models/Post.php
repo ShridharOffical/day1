@@ -4,34 +4,57 @@ namespace App\Models;
 
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
+use Spatie\YamlFrontMatter\YamlFrontMatter;
 
 class Post
 {
+    public $title, $date, $body, $slug;
 
-    public $title, $date, $body ,$slug;
-
-    public function __construct($title, $date, $body,$slug){
+    public function __construct($title, $date, $body, $slug)
+    {
         $this->title = $title;
         $this->date = $date;
-        $this->body =$body;
-        $this->slug =$slug;
-
+        $this->body = $body;
+        $this->slug = $slug;
     }
- 
+
     public static function find($slug)
     {
+        return Cache::remember("posts.{$slug}", 1200, function () use ($slug) {
+            $path = resource_path("posts/{$slug}.html");
 
-        if (!file_exists($path = resource_path(("posts/{$slug}.html")))) {
-            throw new ModelNotFoundException();
-        }
-        return cache()->remember("posts.{$slug}", 1200, fn () => file_get_contents($path));
+            if (!file_exists($path)) {
+                throw new ModelNotFoundException();
+            }
+
+            $document = YamlFrontMatter::parseFile($path);
+
+            return new Post(
+                $document->title,
+                $document->date,
+                $document->body(),
+                $document->slug
+            );
+        });
     }
 
     public static function all()
     {
-        $files = File::files(resource_path("posts/"));
+        return Cache::remember('all_posts', 1200, function () {
+            $files = File::files(resource_path("posts/"));
 
-        return array_map(fn ($file) => $file->getContents(), $files);
+            return collect($files)->map(function ($file) {
+                $document = YamlFrontMatter::parseFile($file);
+
+                return new Post(
+                    $document->title,
+                    $document->date,
+                    $document->body(),
+                    $document->slug
+                );
+            })->sortBy('date')->values();
+        });
     }
 }
