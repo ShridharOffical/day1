@@ -8,18 +8,18 @@
 </head>
 <body>
    
-<?php foreach($posts as $post):?>
+    @foreach($posts as $post)
     <article>
         <h1>
-            <h1>this is access by yamal lib </h1>
-            <a href="/posts/<?= $post->slug?>"> goto dedicated artical seperate</a>
-            <?= $post->title;?>
+            <h1>this is accessed by YAML lib </h1>
+            <a href="/posts/{{ $post->slug }}">Go to dedicated article page</a>
+            {{ $post->title }}
         </h1>
-         <div>
-            <?= $post->body;?>
-         </div>
+        <div>
+            {!! $post->body !!}
+        </div>
     </article>
-<?php endforeach; ?>
+@endforeach
   <a href="/">Go back</a>
 </body>
 </html>
