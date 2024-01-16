@@ -5,3 +5,8 @@ body{
 .li{
     color: red;
 }
+button{
+    padding: 10px;
+    background-color: purple;
+    color: black;
+}

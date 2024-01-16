@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/app.css">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
 <body>
-    <nav>
-        <ul class="li">hii</ul>
-        <ul class="li">am the new</ul>
-        <ul class="li">laravel learn</ul>
-    </nav>
+    <article>
+
+        <?= $post;?>
+    </article>
+  <a href="/">Go back</a>
 </body>
 </html>
