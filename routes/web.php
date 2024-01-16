@@ -38,22 +38,20 @@ Route::get('/collect', function () {
 
 Route::get('/collection', function () {
 
-    $document = YamlFrontMatter::parseFile(resource_path('posts/my-first-post.html'));
     $files = File::files(resource_path("posts/"));
 
+    // This is array map Approch
     $posts = [];
+    $posts =array_map(function($file){
+        $document = YamlFrontMatter::parseFile(resource_path('posts/my-first-post.html'));
 
-    foreach ($files as $file) {
-
-        $document = YamlFrontMatter::parseFile($file);
-
-        $posts[] = new Post(
+        return new Post(
             $document->title,
             $document->date,
             $document->body(),
             $document->slug
         );
-    }
+    },$files);
 
     return view('post', ['posts' => $posts]);
 });
