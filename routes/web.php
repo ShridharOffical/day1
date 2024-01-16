@@ -51,3 +51,4 @@ Route::get('/collection', function () {
     });
     return view('post', ['posts' => $posts]);
 });
+
