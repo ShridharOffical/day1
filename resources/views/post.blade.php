@@ -18,6 +18,8 @@
             <br>
         </h1>
         <div>
+            {!! $singlePost->excerpt !!}
+
             {!! $singlePost->body !!}
         </div>
     </article>
