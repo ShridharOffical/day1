@@ -8,16 +8,17 @@
 </head>
 <body>
    
-    @foreach($posts as $post)
+    @foreach($posts as $singlePost)
     <article>
         <h1>
-            <a href="/post/{{ $post->slug }}">Go to dedicated article page</a>
-           <br> {{ $post->title }}
-           <br>
-           <a href="#">{{$post->category->name}}</a>
+            <a href="/post/{{ $singlePost->slug }}">Go to dedicated article page</a>
+            <br>{{ $singlePost->title }}
+            <br>
+            <a href="/categories/{{$singlePost->category->slug}}">{{$singlePost->category->name}}</a>
+            <br>
         </h1>
         <div>
-            {!! $post->body !!}
+            {!! $singlePost->body !!}
         </div>
     </article>
 @endforeach

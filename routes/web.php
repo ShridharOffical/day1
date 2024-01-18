@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Post;
 use App\Models\Student;
 use App\Models\Category;
 use Illuminate\Support\Facades\File;
@@ -51,20 +50,24 @@ use Illuminate\Support\Facades\Cache;
 // ------- end frist one STUF ------------//
 
 Route::get('/collection',function(){ 
-    $posts=Student::all();
-    return view('post',['posts'=>$posts]);});
+
+\Illuminate\Support\Facades\DB::listen(function ($query){
+
+     logger($query->sql,$query->bindings);
+});
 
 
+    return view('post',['posts'=>Student::with('category')->get()
+        ]);
+});
 
-Route::get('post/{post:slug}',function(Student $post){
+
+Route::get('post/{post:slug}',function(Student $post){ 
+  
     
-    return view('collection',['post'=>$post]);});
+    return view('collection',['post'=>$post]);
+});
 
-  Route::get('categories/{category}',function(Category $category){
-    
-    
-    
-    return view('post',['posts'=>$category->posts]);
-
-
-  });  
+Route::get('categories/{category:slug}', function(Category $category) {
+    return view('post', ['posts' => $category->student]);
+});  
