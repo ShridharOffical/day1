@@ -10,4 +10,17 @@ class Student extends Model
     use HasFactory;
 
     protected $table ='student';
+    protected $fillable = ['title','excerpt','body','slug','category_id'];
+
+    protected $guarded =[];
+
+
+    public function category(){
+
+        return $this->belongsTo(Category::class);
+        
+
+    }
+
+
 }

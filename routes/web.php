@@ -1,6 +1,8 @@
 <?php
 
 use App\Models\Post;
+use App\Models\Student;
+use App\Models\Category;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
@@ -17,29 +19,52 @@ use Illuminate\Support\Facades\Cache;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
-Route::get('/article', function () {
-    return view('article');
-});
+// --- THAT STUF IS ALL IN aPosta --- //
 
-Route::get('posts/{post}', function ($slug) {
-    //find a post by its slug and pass it to a view called "post"
-    return view('collection', [
-        'post' => Post::find($slug)
-    ]);
-});
+// Route::get('/', function () {
+//     return view('index');
+// });
+// Route::get('/article', function () {
+//     return view('article');
+// });
 
-Route::get('/collect', function () {
+// Route::get('posts/{post}', function ($slug) {
+//     //find a post by its slug and pass it to a view called "post"
+//     return view('collection', [
+//         'post' => Post::find($slug)
+//     ]);
+// });
 
-    return view('collection');
-});
+// Route::get('/collect', function () {
+
+//     return view('collection');
+// });
 
 
-Route::get('/collection', function () {
-    // Use caching through the Post class.
-    $posts = Post::all();
+// Route::get('/collection', function () {
+//     // Use caching through the Post class.
+//     $posts = Post::all();
 
-    return view('post', ['posts' => $posts]);
-});
+//     return view('post', ['posts' => $posts]);
+// });
+
+// ------- end frist one STUF ------------//
+
+Route::get('/collection',function(){ 
+    $posts=Student::all();
+    return view('post',['posts'=>$posts]);});
+
+
+
+Route::get('post/{post:slug}',function(Student $post){
+    
+    return view('collection',['post'=>$post]);});
+
+  Route::get('categories/{category}',function(Category $category){
+    
+    
+    
+    return view('post',['posts'=>$category->posts]);
+
+
+  });  

@@ -9,7 +9,8 @@
 <body>
     
     <article>
-
+        <a href="#">{{$post->category->name}}</a>
+<br>
         <?= $post->body;?>
        
     </article>

@@ -11,15 +11,16 @@
     @foreach($posts as $post)
     <article>
         <h1>
-            <h1>this is accessed by YAML lib </h1>
-            <a href="/posts/{{ $post->slug }}">Go to dedicated article page</a>
-            {{ $post->title }}
+            <a href="/post/{{ $post->slug }}">Go to dedicated article page</a>
+           <br> {{ $post->title }}
+           <br>
+           <a href="#">{{$post->category->name}}</a>
         </h1>
         <div>
             {!! $post->body !!}
         </div>
     </article>
 @endforeach
-  <a href="/">Go back</a>
+  <a href="/collection">Go back</a>
 </body>
 </html>
