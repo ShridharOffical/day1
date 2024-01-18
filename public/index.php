@@ -1,3 +1,6 @@
+<link rel="stylesheet" href="style.css">
+
+<label class="Formlable"> Step 1 : Your Details</label>
 <?php
 
 use Illuminate\Contracts\Http\Kernel;
