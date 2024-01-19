@@ -35,10 +35,10 @@ use Illuminate\Support\Facades\Cache;
 //     ]);
 // });
 
-Route::get('/', function () {
+// Route::get('/', function () {
 
-    return view('components/layout');
-});
+//     return view('components/layout');
+// });
 
 
 // Route::get('/collection', function () {
