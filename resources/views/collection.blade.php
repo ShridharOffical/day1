@@ -10,12 +10,18 @@
     
     <article>
 
-<h1>{{ $post->title }}</h1>
+<h1>{{ $post->slug }}</h1>
+<p> By 
+<a href="/authors/{{$post->author->username}}">{{ $post->author->name }}</a>
+in &nbsp;<a href="/categories/{{$post->category->slug}}">
+    {{$post->category->name}}</a>
+</p>
 
-        <a href="/categories/{{$post->category->slug}}">{{$post->category->name}}</a>
-        <br>
-        <?= $post->body;?>
+
+<br>
+<div>{{ $post->body }}</div>
        
+
     </article>
   <a href="/collection">Go back</a>
 </body>

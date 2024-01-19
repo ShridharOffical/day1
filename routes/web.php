@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Student;
+use App\Models\User;
 use App\Models\Category;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
@@ -34,10 +35,10 @@ use Illuminate\Support\Facades\Cache;
 //     ]);
 // });
 
-// Route::get('/collect', function () {
+Route::get('/', function () {
 
-//     return view('collection');
-// });
+    return view('components/layout');
+});
 
 
 // Route::get('/collection', function () {
@@ -51,13 +52,13 @@ use Illuminate\Support\Facades\Cache;
 
 Route::get('/collection',function(){ 
 
-\Illuminate\Support\Facades\DB::listen(function ($query){
+// \Illuminate\Support\Facades\DB::listen(function ($query){
 
-     logger($query->sql,$query->bindings);
-});
+//      logger($query->sql,$query->bindings);
+// });
 
 
-    return view('post',['posts'=>Student::with('category')->get()
+    return view('post',['posts'=>Student::latest()->with(['category','author'])->get()
         ]);
 });
 
@@ -70,4 +71,10 @@ Route::get('post/{post:slug}',function(Student $post){
 
 Route::get('categories/{category:slug}', function(Category $category) {
     return view('post', ['posts' => $category->student]);
-});  
+}); 
+
+Route::get('authors/{authors:username}', function(User $authors) {
+
+    return view('post', ['posts' => $authors->student]);
+}); 
+
