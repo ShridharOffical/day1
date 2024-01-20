@@ -14,7 +14,7 @@ class Category extends Model
     public function student(){
 
         return $this->hasMany(Student::class);
-        
-
     }
+    
+    
 }

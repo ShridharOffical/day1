@@ -16,18 +16,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-        
+     
         
       $user= User::factory()->create([
         'name' =>'shirdhar patil'
     
     ]);
 
-       Student::factory(5)->create([
+       Student::factory(10)->create([
         'user_id' => $user->id,
         
        ]);
+       User::factory()->count(5)->create()->each(function ($fakeUser) {
+        $fakeUser->students()->save(Student::factory()->make());
+    });
 
         // Student::factory(10)->create();
     //    $user= User::factory()->create();

@@ -58,7 +58,11 @@ Route::get('/collection',function(){
 // });
 
 
-    return view('post',['posts'=>Student::latest()->with(['category','author'])->get()
+    return view('post',[
+        
+        
+        'category' =>Category::all(),
+        'posts'=>Student::latest()->with(['category','author'])->get()
         ]);
 });
 
