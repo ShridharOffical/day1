@@ -1,3 +1,1 @@
-function popupmsg(){
-    alert("javascript is connected");
-}
+alert('are you ready ? ');

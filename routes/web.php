@@ -1,12 +1,15 @@
 <?php
 
-use App\Models\Student;
-use App\Models\User;
+use App\Http\Controllers\PostController;
 use App\Models\Category;
+use App\Models\Post;
+use App\Models\User;
+use Illuminate\Log\Logger;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
+
 use Spatie\YamlFrontMatter\YamlFrontMatter;
-use Illuminate\Support\Facades\Cache;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,69 +22,45 @@ use Illuminate\Support\Facades\Cache;
 |
 */
 
-// --- THAT STUF IS ALL IN aPosta --- //
-
-// Route::get('/', function () {
-//     return view('index');
-// });
-// Route::get('/article', function () {
-//     return view('article');
-// });
-
-// Route::get('posts/{post}', function ($slug) {
-//     //find a post by its slug and pass it to a view called "post"
-//     return view('collection', [
-//         'post' => Post::find($slug)
-//     ]);
-// });
-
-// Route::get('/', function () {
-
-//     return view('components/layout');
-// });
 
 
-// Route::get('/collection', function () {
-//     // Use caching through the Post class.
-//     $posts = Post::all();
+Route::get('/', [PostController::class, 'index'])->name('home');
+Route::get('post/{post:slug}', [PostController::class, 'show']);
 
-//     return view('post', ['posts' => $posts]);
-// });
+//  make route for categories
 
-// ------- end frist one STUF ------------//
+Route::get('/categories/{categories:slug}', function (Category $categories) {
 
-Route::get('/collection',function(){ 
+    return view('posts', [
 
-// \Illuminate\Support\Facades\DB::listen(function ($query){
+        'posts' => $categories->posts,
+        'currentCategory' => $categories,
+        'categories' => Category::all()
+    ]);
+})->name('category');
 
-//      logger($query->sql,$query->bindings);
-// });
 
-
-    return view('post',[
-        
-        
-        'category' =>Category::all(),
-        'posts'=>Student::latest()->with(['category','author'])->get()
-        ]);
+Route::get('/authors/{author:username}', function (User $author) {
+    return view('posts', [
+        'posts' => $author->posts
+    ]);
 });
 
 
-Route::get('post/{post:slug}',function(Student $post){ 
-  
-    
-    return view('collection',['post'=>$post]);
+
+
+
+// just for rough
+
+Route::get('/home', function () {
+    return view('index');
 });
 
-Route::get('categories/{category:slug}', function(Category $category) {
+Route::get('/num/{number}', function ($number) {
 
-    return view('post', [
-        'category' =>Category::all(),
-        'posts' => $category->student]);
-}); 
 
-Route::get('authors/{authors:username}', function(User $authors) {
+    // return $number;
+    return view('number', ['number' => $number]);
+});
 
-    return view('post', ['posts' => $authors->student]);
-}); 
 

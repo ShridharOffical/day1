@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Category;
-use App\Models\User;
-use App\Models\Student;
-
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Category;
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,70 +16,71 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-     
-        
-      $user= User::factory()->create([
-        'name' =>'shirdhar patil'
-    
-    ]);
+            // when we do not want to refresh data
+        // User::truncate();
+        // Post::truncate();
+        // Category::truncate();
 
-       Student::factory(10)->create([
-        'user_id' => $user->id,
-        
-       ]);
-       User::factory()->count(5)->create()->each(function ($fakeUser) {
-        $fakeUser->students()->save(Student::factory()->make());
-    });
 
-        // Student::factory(10)->create();
-    //    $user= User::factory()->create();
+        // This code for factory
+        $user = User::factory()->create([
+            'name'=>'John Doe'
+        ]);
+
+        Post::factory(30)->create([
+            'user_id'=>$user->id
+        ]);
+        
+
+//  This code for seeder 
+        // $user = User::factory()->create();
 
         // $personal=Category::create([
         //     'name'=>'Personal',
         //     'slug'=>'personal'
         // ]);
+
         // $family=Category::create([
         //     'name'=>'Family',
         //     'slug'=>'family'
         // ]);
+
         // $work=Category::create([
         //     'name'=>'Work',
         //     'slug'=>'work'
         // ]);
 
-        // Student::create([
+        // // add Post data into post table by seeder
 
-        //     'user_id'=>$user->id,
-        //     'category_id'=>$personal->id,
-        //     'title'=>'My Personal Post',
-        //     'slug'=>'my-personal-post',
-        //     'excerpt'=>'lorem personal doller si amet',
-        //     'body'=>'If you have manually added a column to a database table without using Laravel migrations and you want to reflect this change in your Laravel application, you have a few options:'
-            
-        // ]);
-        // Student::create([
-
-        //     'user_id'=>$user->id,
+        // Post::create([
+        //     'user_id'=> $user->id,
         //     'category_id'=>$family->id,
         //     'title'=>'My Family Post',
         //     'slug'=>'my-family-post',
-        //     'excerpt'=>'lorem family doller si amet',
-        //     'body'=>'If you have manually added a column to a database table without using Laravel migrations and you want to reflect this change in your Laravel application, you have a few options:'
-            
+        //     'excerpt'=>'<p>Lorem ipsum dollar sit amet</p>',
+        //     'body'=>'<p>Indian-Origin Singapore Minister Resigns After Corruption Charges.
+        //     ThaneMan Kills Ex Lover, Then Dies By Suicide. ...
+        //     Bilkis Bano Case Convict Seeks 4 More Weeks To Surrender, Cites Poor Health.
+        //     3 Border Force Personnel Injured In Fresh Mob Violence In Manipur.</p>'
         // ]);
-       
-        // Student::create([
 
-        //     'user_id'=>$user->id,
+        // Post::create([
+        //     'user_id'=> $user->id,
         //     'category_id'=>$work->id,
         //     'title'=>'My Work Post',
         //     'slug'=>'my-work-post',
-        //     'excerpt'=>'lorem work doller si amet',
-        //     'body'=>'If you have manually added a column to a database table without using Laravel migrations and you want to reflect this change in your Laravel application, you have a few options:'
-            
+        //     'excerpt'=>'<p>Lorem ipsum dollar sit amet</p>',
+        //     'body'=>'<p>Indian-Origin Singapore Minister Resigns After Corruption Charges.
+        //     ThaneMan Kills Ex Lover, Then Dies By Suicide. ...
+        //     Bilkis Bano Case Convict Seeks 4 More Weeks To Surrender, Cites Poor Health.
+        //     3 Border Force Personnel Injured In Fresh Mob Violence In Manipur.</p>'
         // ]);
 
 
 
+        // // \App\Models\User::factory()->create([
+        // //     'name' => 'Test User',
+        // //     'email' => 'test@example.com',
+        // // ]);
     }
 }

@@ -1,12 +1,17 @@
 body{
-    background-color: orange;
-    color: white;
+   background-color: white;
+   color: black;
+   max-width: 660px;
+   margin: auto;
+   font-family: sans-serif;
 }
-.li{
-    color: red;
+
+
+p{
+    line-height:1.0 ;
 }
-button{
-    padding: 10px;
-    background-color: purple;
-    color: black;
+
+article+article{
+    margin-top: 3rem;
+    border-top: 1px solid gray;
 }
