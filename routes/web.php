@@ -61,7 +61,7 @@ Route::get('/collection',function(){
     return view('post',[
         
         
-        'categories' =>Category::all(),
+        'category' =>Category::all(),
         'posts'=>Student::latest()->with(['category','author'])->get()
         ]);
 });
@@ -74,7 +74,10 @@ Route::get('post/{post:slug}',function(Student $post){
 });
 
 Route::get('categories/{category:slug}', function(Category $category) {
-    return view('post', ['posts' => $category->student]);
+
+    return view('post', [
+        'category' =>Category::all(),
+        'posts' => $category->student]);
 }); 
 
 Route::get('authors/{authors:username}', function(User $authors) {
